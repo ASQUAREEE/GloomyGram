@@ -53,18 +53,18 @@ const signupForm = () => {
   })
 
   
-  const { mutateAsync: createUserAccount, isPending: isCreatingUser } = useCreateUserAccount();
+  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
 
-  const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount();
+  const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount();
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+
 
    const newUser = await createUserAccount(values);
-   console.log(newUser);
+  
 
    if(!newUser){
     return toast({
@@ -169,7 +169,7 @@ const signupForm = () => {
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isCreatingUser ?(<div className="flex-center gap-2"> <Loader /> Loading... </div>): "Sign up"}
+          {isCreatingUser|| isSigningIn || isUserLoading ?(<div className="flex-center gap-2"> <Loader /> Loading... </div>): "Sign up"}
         </Button>
 
         <p className="text-small-regular text-light-2 text-center mt-2">Already have an account? 

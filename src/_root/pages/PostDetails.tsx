@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Loader from "@/components/shared/Loader";
 import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
@@ -9,7 +11,7 @@ import { Link, useParams } from "react-router-dom";
 const PostDetails = () => {
   const { id } = useParams();
 
-  const { data: post, isPending } = useGetPostById(id || "");
+  const { data: post, isLoading } = useGetPostById(id || "");
 
   const {user} = useUserContext();
 
@@ -19,9 +21,9 @@ const PostDetails = () => {
 
   return (
     <div className="post_details-conainer">
-      {isPending ? (
+      {isLoading ? (
         <Loader />
-      ) : (
+      ) : post ? (
         <div className="post_details-card">
 
           <img src={post?.imageUrl}
@@ -109,7 +111,12 @@ const PostDetails = () => {
 
           </div>
         </div>
-      )}
+        
+      )
+    :(
+      <p>Post not found</p>
+    )
+    }
     </div>
   );
 };

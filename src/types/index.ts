@@ -1,14 +1,25 @@
+// export type IContextType = {
+
+// user: IUser;
+// isLoading: boolean;
+// setUser: React.Dispatch<React.SetStateAction<boolean>>;
+// isAuthenticated: boolean;
+// setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+// checkAuthUser: () => Promise<boolean>;
+
+
+// }
+
+
 export type IContextType = {
+  user: IUser;
+  isLoading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<IUser>>; // Should handle IUser updates
+  isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>; // Handles boolean updates
+  checkAuthUser: () => Promise<boolean>;
+};
 
-user: IUser;
-isLoading: boolean;
-setUser: React.Dispatch<React.SetStateAction<boolean>>;
-isAuthenticated: boolean;
-setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-checkAuthUser: () => Promise<boolean>;
-
-
-}
 
 
 

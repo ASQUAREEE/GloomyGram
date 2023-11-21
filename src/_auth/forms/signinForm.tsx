@@ -52,13 +52,13 @@ const signinForm = () => {
 
   
 
-  const { mutateAsync: signInAccount, isPending} = useSignInAccount();
+  const { mutateAsync: signInAccount, isLoading} = useSignInAccount();
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SigninValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+  
 
    const session = await signInAccount({
     email: values.email,
@@ -131,7 +131,7 @@ const signinForm = () => {
           )}
         />
         <Button type="submit" className="shad-button_primary">
-          {isUserLoading ?(<div className="flex-center gap-2"> <Loader /> Loading... </div>): "Sign in"}
+          {isLoading || isUserLoading ?(<div className="flex-center gap-2"> <Loader /> Loading... </div>): "Sign in"}
         </Button>
 
         <p className="text-small-regular text-light-2 text-center mt-2">Dont't have an account? 
