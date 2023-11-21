@@ -37,7 +37,7 @@ navigate(0);                     // this will navigagte to the sign up or sign i
         </Button>
 
     <Link to={`/profile/${user.id}`} className = "flex-center gap-3">
-        <img src={user.imageUrl || '/assets/images/profile-placeholder.svg'} alt='profile' className='h-8 w-8 rounded-full' />
+        <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'} alt='profile' className='h-8 w-8 rounded-full' />
     
     </Link>
 
