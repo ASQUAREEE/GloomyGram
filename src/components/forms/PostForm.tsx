@@ -119,7 +119,7 @@ return navigate(`/posts/${post.$id}`)
           <FormItem>
             <FormLabel className="shad-form_label">Caption</FormLabel>
             <FormControl>
-              <Textarea className="shad-textarea custom-scrollbar" placeholder="shadcn" {...field} />
+              <Textarea className="shad-textarea custom-scrollbar" placeholder="Enter your caption here..." {...field} />
             </FormControl>
           
             <FormMessage className="shad-form_label" />
@@ -150,7 +150,7 @@ return navigate(`/posts/${post.$id}`)
           <FormItem>
             <FormLabel className="shad-form_label">Add Location</FormLabel>
             <FormControl>
-             <Input type="text" className="shad-input" {...field} />
+             <Input type="text" className="shad-input" {...field} placeholder="Enter location here..."  />
             </FormControl>
           
             <FormMessage className="shad-form_label" />
@@ -164,7 +164,7 @@ return navigate(`/posts/${post.$id}`)
           <FormItem>
             <FormLabel className="shad-form_label">Add Tags (separated by comma " , ") </FormLabel>
             <FormControl>
-             <Input type="text" className="shad-input" placeholder="Art,Expression,Learn" {...field} />
+             <Input type="text" className="shad-input" placeholder="e.g., Art, Expression, Learn" {...field} />
             </FormControl>
           
             <FormMessage className="shad-form_label" />

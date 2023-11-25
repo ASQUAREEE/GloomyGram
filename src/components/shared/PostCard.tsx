@@ -12,6 +12,7 @@ const PostCard = ({ post }: PostCardProps) => {
 
 const {user} = useUserContext();
 
+
 if(!post.creator) return;
 
   return (
@@ -21,11 +22,11 @@ if(!post.creator) return;
           <Link to={`/profile/${post.creator.$id}`}>
             <img
               src={
-                post?.create?.imageUrl ||
+                post?.creator?.imageUrl ||
                 "/assets/icons/profile-placeholder.svg"
               }
               alt="creator"
-              className="rounded-full 2-12 lg:h-12"
+              className="rounded-full h-8 w-8 lg:h-12 lg:w-12"
             />
           </Link>
 
