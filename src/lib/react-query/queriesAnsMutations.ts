@@ -7,7 +7,7 @@ useQuery,
 useInfiniteQuery,
 
 } from '@tanstack/react-query'
-import { createUserAccount, signInAccount, signOutAccount,createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getCurrentUser, getPostById, updatePost, deletePost, getInfinitePost, searchPosts, getUsers, getUserById, updateUser } from '../appwrite/api'
+import { createUserAccount, signInAccount, signOutAccount,createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getCurrentUser, getPostById, updatePost, deletePost, getInfinitePost, searchPosts, getUsers, getUserById, updateUser, commentPost, getRecentComments } from '../appwrite/api'
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from '@/types'
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
 
@@ -59,6 +59,19 @@ export const useCreatePost = () => {
   };
 
 
+ 
+  export const useGetRecentComment = (postId: string) => {
+    return useQuery({
+      queryKey: [QUERY_KEYS.GET_RECENT_COMMENT, postId],
+      queryFn: () => getRecentComments(postId), // Wrap getRecentComments inside an arrow function to delay its execution
+    });
+  };
+
+ 
+
+
+
+
   export const useLikePost = () => {
 
     const queryClient = useQueryClient();
@@ -84,9 +97,41 @@ export const useCreatePost = () => {
   }
     })
 
+  }
 
+
+
+  export const useCommentPost = () => {
+
+    const queryClient = useQueryClient();
+
+    return useMutation({
+  mutationFn: ({postId, commentsArray}:{postId: string; commentsArray: string[]}) =>
+  
+  commentPost(postId, commentsArray),
+  onSuccess: (data) => {
+  queryClient.invalidateQueries({
+    queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id]                   // if your like changes and open up the post please update like count    kyuki woh cache mai save hota hai
+  })
+  queryClient.invalidateQueries({
+    queryKey: [QUERY_KEYS.GET_RECENT_POSTS]                   // if your like changes and open up the post please update like count    kyuki woh cache mai save hota hai
+  })
+  queryClient.invalidateQueries({
+    queryKey: [QUERY_KEYS.GET_POSTS]                   // if your like changes and open up the post please update like count    kyuki woh cache mai save hota hai
+  })
+  queryClient.invalidateQueries({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER]                   // if your like changes and open up the post please update like count    kyuki woh cache mai save hota hai
+  })
 
   }
+    })
+
+  }
+
+
+
+
+
   export const useSavePost = () => {
 
     const queryClient = useQueryClient();

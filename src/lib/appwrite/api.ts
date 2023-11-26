@@ -248,7 +248,7 @@ export async function getRecentPosts() {
   const posts = await databases.listDocuments(
     appwriteConfig.databaseId,
     appwriteConfig.postCollectionId,
-    [Query.orderDesc('$createdAt'), Query.limit(20)]
+    [Query.orderDesc('comment'), Query.limit(20)]
     
   )
 
@@ -256,6 +256,33 @@ export async function getRecentPosts() {
 
   return posts;
 }
+export async function getRecentComments(postId: string) {
+  try {
+    // Fetch the post document from the database using postId
+    const post = await databases.getDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.postCollectionId,
+        postId
+    );
+
+    if (!post || !post.comment) {
+        throw new Error('Post or comments not found');
+    }
+
+    // Sort comments by timestamp or creation date to get the most recent ones
+    const recentComments = post.comment.slice(0, 10); // Assuming 10 is the number of recent comments you want to fetch
+  
+    console.log(recentComments);
+
+
+    return recentComments;
+} catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch recent comments');
+}
+
+}
+
 
 
 export async function likePost(postId: string, likesArray: string[]){
@@ -283,6 +310,37 @@ try {
 
 
 }
+
+
+
+
+export async function commentPost(postId: string, commentsArray: string[]){
+
+try {
+
+  const updatedPost = await databases.updateDocument(
+  
+    appwriteConfig.databaseId,
+    appwriteConfig.postCollectionId,
+    postId,
+    {
+      comment: commentsArray
+    }
+
+  )
+
+  if(!updatedPost) throw Error;
+
+  return updatedPost;
+  
+} catch (error) {
+  console.log(error);
+}
+
+
+}
+
+
 export async function savePost(postId: string, userId: string){
 
 try {

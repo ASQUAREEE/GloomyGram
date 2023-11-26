@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 
 import { checkIsLiked } from "@/lib/utils";
 import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from "@/lib/react-query/queriesAnsMutations";
+import Comment from "./Comment"
 
 
 type PostStatsProps = {
@@ -14,6 +15,16 @@ type PostStatsProps = {
 const PostStats = ({ post, userId }: PostStatsProps) => {
   const location = useLocation();
   const likesList = post.likes.map((user: Models.Document) => user.$id);
+
+
+  const [showComments, setShowComments] = useState(false);
+
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
+
+  
+
 
   const [likes, setLikes] = useState<string[]>(likesList);
   const [isSaved, setIsSaved] = useState(false);
@@ -86,6 +97,28 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
         <p className="small-medium lg:base-medium">{likes.length}</p>
       </div>
 
+
+
+
+      <div className="flex gap-2">
+        <img
+          src="/assets/icons/comment.svg"
+          alt="comment"
+          width={20}
+          height={20}
+          className="cursor-pointer"
+          onClick={toggleComments}
+        />
+      </div>
+
+      {/* Render the Comment component conditionally based on showComments */}
+      {showComments && (
+        <Comment  postId = {post.$id}/>
+      )}
+
+
+
+
       <div className="flex gap-2">
         <img
           src={isSaved ? "/assets/icons/saved.svg" : "/assets/icons/save.svg"}
@@ -96,6 +129,8 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
           onClick={(e) => handleSavePost(e)}
         />
       </div>
+
+
     </div>
   );
 };
